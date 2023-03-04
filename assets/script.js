@@ -9,15 +9,15 @@ function grabCurrentdata(name, obj, txt) {
     var currentWind = `Wind: ${obj.wind.speed}MPH`
     var currentHumidity = `Humidity: ${obj.main.humidity}%`
 
-    console.log(name)
-    console.log(icon)
-    console.log(currentTemp)
-    console.log(currentWind)
-    console.log(currentHumidity)
-
     // add to HTML main
-    var cityHeaderEl = document.querySelector('#cityheader')
-    cityHeaderEl.innerHTML = `${txt} (${dateReorg}) <img src=${iconSrc}>`
+    var cwCardEl = document.querySelector('#currentWeatherCard')
+    var currentWeatherEl = document.querySelector('#currentWeatherH')
+    var currentWeatherUlEl = document.querySelector('#currentWeatherUl')
+    cwCardEl.classList.add('card')
+    currentWeatherEl.innerHTML = `<h3>${txt} (${dateReorg}) <img src=${iconSrc}><h3>`
+    currentWeatherUlEl.innerHTML = `<li>${currentTemp}</li> 
+                                    <li>${currentWind}</li>
+                                    <li> ${currentHumidity}</li>`
 
     // add to HTML aside
     //var prevCitiesEl = document.querySelector('#previouscities')
