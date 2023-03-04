@@ -1,6 +1,6 @@
 var submitBtn = document.getElementById('submitbtn')
 
-function filterData(objj){
+function filterData(objj) {
     var dateGrabbed = objj.dt_txt.split('-')
     var dateReorg = `${dateGrabbed[1]}/${dateGrabbed[2].slice(0, 2)}/${dateGrabbed[0]}`
     var APIicon = objj.weather[0].icon
@@ -19,7 +19,7 @@ function filterData(objj){
 }
 
 function printCurrentdata(name, obj) {
-    var dataGrabbed= filterData(obj)
+    var dataGrabbed = filterData(obj)
     // add to HTML main
     var cwCardEl = document.querySelector('#currentWeatherCard')
     var currentWeatherEl = document.querySelector('#currentWeatherH')
@@ -35,9 +35,31 @@ function printCurrentdata(name, obj) {
     //prevCitiesEl.innerHTML += `<a href="#" class="list-group-item list-group-item-action active" aria-current="true">${inputCityEl.toUpperCase()}</a>`
 }
 
-function printForecastdata(arr){
-    for (let i=0; i<arr.length; i++){
-        console.log(filterData(arr[i]))
+function printForecastdata(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        var forecastData = filterData(arr[i])
+        console.log(forecastData)
+
+        var forecastEl = document.getElementById("forecast")
+        var cardDiv = document.createElement("div")
+        cardDiv.classList.add('card', 'col-2')
+        var cardBodyDiv = document.createElement("div")
+        cardBodyDiv.classList.add('card-body')
+        var headerEl = document.createElement('h6')
+        headerEl.textContent = forecastData.date
+        var listEl = document.createElement('ul')
+        listEl.setAttribute('class','list-group list-group-flush')
+        listEl.setAttribute('style','list-style-type: none')
+        listEl.innerHTML = `<li><img src =${forecastData.icon}></li>
+                            <li>${forecastData.temp}</li> 
+                            <li>${forecastData.wind}</li>
+                            <li> ${forecastData.humidity}</li>`
+        cardBodyDiv.appendChild(headerEl)
+        cardBodyDiv.appendChild(listEl)
+        forecastEl.appendChild(cardDiv).appendChild(cardBodyDiv)
+
+
+
     }
 }
 function checkApi(inputVal) {
