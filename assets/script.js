@@ -1,6 +1,6 @@
 var submitBtn = document.getElementById('submitbtn')
 
-
+//goes through the data from API and creates an object with the data needed
 function filterData(objj) {
     var dateGrabbed = objj.dt_txt.split('-')
     var dateReorg = `${dateGrabbed[1]}/${dateGrabbed[2].slice(0, 2)}/${dateGrabbed[0]}`
@@ -19,20 +19,24 @@ function filterData(objj) {
     return neededData
 }
 
+
 function printCurrentdata(name, obj) {
+    // grabs data for current weather and corresponding HTL elements
     var dataGrabbed = filterData(obj)
     var cwCardEl = document.querySelector('#currentWeatherCard')
     var currentWeatherEl = document.querySelector('#currentWeatherH')
     var currentWeatherUlEl = document.querySelector('#currentWeatherUl')
     cwCardEl.classList.add('card')
+    // adds current weather data to HTML
     currentWeatherEl.innerHTML = `<h3>${name} (${dataGrabbed.date}) <img src=${dataGrabbed.icon}><h3>`
     currentWeatherUlEl.innerHTML = `<li>${dataGrabbed.temp}</li> 
                                     <li>${dataGrabbed.wind}</li>
                                     <li> ${dataGrabbed.humidity}</li>`
 
-    // add to HTML aside
+    // adds searched city to HTML aside
     var prevCitiesEl = document.querySelector('#previouscities')
     prevCitiesEl.innerHTML += `<li class="list-group-item list-group-item-action active pb-2" aria-current="true">${name}</li>`
+
 }
 
 function printForecastdata(arr) {
@@ -41,6 +45,7 @@ function printForecastdata(arr) {
         var titleEl = document.createElement('h3')
         titleEl.textContent = '5-Day Forecast:'
         forecastEl.appendChild(titleEl)
+    // runs through array of objects for next 5 days andd adds it to HTML    
     for (let i = 0; i < arr.length; i++) {
         var forecastData = filterData(arr[i])
         var cardDiv = document.createElement("div")
@@ -62,6 +67,7 @@ function printForecastdata(arr) {
     }
 }
 
+// adds user input to URL and checks to see if there is a healthy response to print data on the page
 function checkApi(inputVal) {
 
     var weatherURL = `https://api.openweathermap.org/data/2.5/forecast?q=${inputVal.toLowerCase()}&appid=9d4a069564580646340081bd6f2b3b20&units=imperial`
@@ -87,10 +93,11 @@ function checkApi(inputVal) {
         })
 }
 
+// checks to see if the user inputted something and then runs it through the server API to see if it's there
 function handleSubmittedCity(event) {
     event.preventDefault()
     var inputCityEl = document.querySelector('#inputCity').value.trim()
-    // Alerts user if search bar is empty
+    // Alerts user if search is empty
     if (!inputCityEl) {
         alert('You need to enter a city!');
         return;
