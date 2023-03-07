@@ -1,4 +1,5 @@
 var submitBtn = document.getElementById('submitbtn')
+var prevCitiesEl = document.querySelector('#previouscities')
 
 //goes through the data from API and creates an object with the data needed
 function filterData(objj) {
@@ -19,7 +20,6 @@ function filterData(objj) {
     return neededData
 }
 
-
 function printCurrentdata(name, obj) {
     // grabs data for current weather and corresponding HTL elements
     var dataGrabbed = filterData(obj)
@@ -32,19 +32,14 @@ function printCurrentdata(name, obj) {
     currentWeatherUlEl.innerHTML = `<li>${dataGrabbed.temp}</li> 
                                     <li>${dataGrabbed.wind}</li>
                                     <li> ${dataGrabbed.humidity}</li>`
-
-    // adds searched city to HTML aside
-    var prevCitiesEl = document.querySelector('#previouscities')
-    prevCitiesEl.innerHTML += `<li class="list-group-item list-group-item-action active pb-2" aria-current="true">${name}</li>`
-
 }
 
 function printForecastdata(arr) {
     var forecastEl = document.getElementById("forecast")
-        forecastEl.innerHTML = ""
-        var titleEl = document.createElement('h3')
-        titleEl.textContent = '5-Day Forecast:'
-        forecastEl.appendChild(titleEl)
+    forecastEl.innerHTML = ""
+    var titleEl = document.createElement('h3')
+    titleEl.textContent = '5-Day Forecast:'
+    forecastEl.appendChild(titleEl)
     // runs through array of objects for next 5 days andd adds it to HTML    
     for (let i = 0; i < arr.length; i++) {
         var forecastData = filterData(arr[i])
@@ -55,8 +50,8 @@ function printForecastdata(arr) {
         var headerEl = document.createElement('h6')
         headerEl.textContent = forecastData.date
         var listEl = document.createElement('ul')
-        listEl.setAttribute('class','list-group list-group-flush')
-        listEl.setAttribute('style','list-style-type: none')
+        listEl.setAttribute('class', 'list-group list-group-flush')
+        listEl.setAttribute('style', 'list-style-type: none')
         listEl.innerHTML = `<li><img src =${forecastData.icon}></li>
                             <li>${forecastData.temp}</li>
                             <li>${forecastData.wind}</li>
@@ -77,7 +72,6 @@ function checkApi(inputVal) {
             if (!response.ok) {
                 throw alert('You need to enter a valid city!')
             }
-
             return response.json()
         })
         .then(function (data) {
@@ -89,6 +83,9 @@ function checkApi(inputVal) {
             printCurrentdata(cityName, currentData)
 
             printForecastdata(forecastArray)
+
+            // adds searched city to HTML aside 
+            prevCitiesEl.innerHTML += `<li class="list-group-item list-group-item-action active pb-2 prevCity" aria-current="true" data-city=${inputVal}>${inputVal}</li>`
 
         })
 }
@@ -108,3 +105,10 @@ function handleSubmittedCity(event) {
 
 
 submitBtn.addEventListener('click', handleSubmittedCity)
+
+prevCitiesEl.addEventListener('click', function(event){
+    if (event.target && event.target.nodeName === 'LI') {
+        const text = event.target.textContent;
+        checkApi(text);
+      }
+    })
