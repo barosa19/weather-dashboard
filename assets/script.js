@@ -83,10 +83,6 @@ function checkApi(inputVal) {
             printCurrentdata(cityName, currentData)
 
             printForecastdata(forecastArray)
-
-            // adds searched city to HTML aside 
-            prevCitiesEl.innerHTML += `<li class="list-group-item list-group-item-action active pb-2 prevCity" aria-current="true" data-city=${inputVal}>${inputVal}</li>`
-
         })
 }
 
@@ -101,14 +97,17 @@ function handleSubmittedCity(event) {
     }
 
     checkApi(inputCityEl)
+
+    // adds searched city to HTML aside
+    prevCitiesEl.innerHTML += `<li class=" btn btn-outline-primary prevCity" aria-label="current" data-city=${inputCityEl}>${inputCityEl}</li>`
+
 }
 
 
 submitBtn.addEventListener('click', handleSubmittedCity)
 
 prevCitiesEl.addEventListener('click', function(event){
-    if (event.target && event.target.nodeName === 'LI') {
-        const text = event.target.textContent;
-        checkApi(text);
+        var cityName = event.target.textContent;
+        checkApi(cityName);
       }
-    })
+    )
