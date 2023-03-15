@@ -71,6 +71,7 @@ function checkApi(inputVal) {
         .then(function (response) {
             if (!response.ok) {
                 throw alert('You need to enter a valid city!')
+                
             }
             return response.json()
         })
@@ -96,11 +97,12 @@ function handleSubmittedCity(event) {
         return;
     }
 
-    checkApi(inputCityEl)
-
-    // adds searched city to HTML aside
+ // adds searched city to HTML aside
+    //NEED to add an if that looks through the list and sees if there is one already and if not it creates the btn
     prevCitiesEl.innerHTML += `<li class=" btn btn-outline-primary prevCity" aria-label="current" data-city=${inputCityEl}>${inputCityEl}</li>`
 
+
+    checkApi(inputCityEl)
 }
 
 
