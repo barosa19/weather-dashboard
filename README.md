@@ -11,6 +11,7 @@ No installation is required for this application. To visit the the webpage open 
 ## Usage
 
 This uniqueness of this webpage is that the user has access to past cities that they searched. This means they can more efficently look up weather statistics for previous cities by a press of a button. Another unique aspect of this webpage is the icons to give the user a reference of what those statistics on the page mean. 
+![screenshot](https://user-images.githubusercontent.com/122834927/225359849-c6c97528-5a17-4c4c-9296-9dfcdaa712c6.PNG)
 
 ## Credits
 N/A
